@@ -152,6 +152,13 @@ spring:
             - Path=/admin-api/crm/**
           filters:
             - RewritePath=/admin-api/crm/v3/api-docs, /v3/api-docs # 配置，保证转发到 /v3/api-docs
+        ## autopart-server 服务
+        - id: autopart-admin-api # 路由的编号
+          uri: grayLb://autopart-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/admin-api/autopart/**
+          filters:
+            - RewritePath=/admin-api/erp/v3/api-docs, /v3/api-docs # 配置，保证转发到 /v3/api-docs
       x-forwarded:
         prefix-enabled: false # 避免 Swagger 重复带上额外的 /admin-api/system 前缀
 
@@ -196,6 +203,9 @@ knife4j:
       - name: crm-server
         service-name: crm-server
         url: /admin-api/crm/v3/api-docs
+      - name: autopart-server
+        service-name: autopart-server
+        url: /admin-api/autopart/v3/api-docs
 
 --- #################### 芋道相关配置 ####################
 

@@ -67,4 +67,12 @@ public class TenantSaveReqVO {
                 || (ObjectUtil.isAllNotEmpty(username, password)); // 新增时，必须都传递 username、password
     }
 
+    @Schema(description = "租户码", requiredMode = Schema.RequiredMode.REQUIRED, example = "hongwei")
+    @NotNull(message = "租户码不能为空")
+    private String code;
+
+    @Schema(description = "数据源连接", requiredMode = Schema.RequiredMode.REQUIRED, example = "jdbc:mysql://127.0.0.1:3306/hongwei?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true")
+    @NotNull(message = "数据源连接不能为空")
+    private String jdbcUrl;
+
 }
