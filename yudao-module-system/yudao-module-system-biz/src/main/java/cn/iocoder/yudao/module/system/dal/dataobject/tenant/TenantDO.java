@@ -37,6 +37,11 @@ public class TenantDO extends BaseDO {
      * 租户名，唯一
      */
     private String name;
+
+    /**
+     * 租户码，唯一
+     */
+    private String code;
     /**
      * 联系人的用户编号
      *

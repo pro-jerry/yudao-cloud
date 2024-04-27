@@ -23,6 +23,10 @@ public class TenantSaveReqVO {
     @NotNull(message = "租户名不能为空")
     private String name;
 
+    @Schema(description = "租户码", requiredMode = Schema.RequiredMode.REQUIRED, example = "hongwei")
+    @NotNull(message = "租户码不能为空")
+    private String code;
+
     @Schema(description = "联系人", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋艿")
     @NotNull(message = "联系人不能为空")
     private String contactName;
@@ -66,9 +70,5 @@ public class TenantSaveReqVO {
         return id != null // 修改时，不需要传递
                 || (ObjectUtil.isAllNotEmpty(username, password)); // 新增时，必须都传递 username、password
     }
-
-    @Schema(description = "租户码", requiredMode = Schema.RequiredMode.REQUIRED, example = "hongwei")
-    @NotNull(message = "租户码不能为空")
-    private String code;
 
 }

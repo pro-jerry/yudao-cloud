@@ -76,9 +76,6 @@ public class TenantServiceImpl implements TenantService {
     @Resource
     private PermissionService permissionService;
 
-    @Resource
-    private DataSourceConfigApi dataSourceConfigApi;
-
     @Override
     public List<Long> getTenantIdList() {
         List<TenantDO> tenants = tenantMapper.selectList();
@@ -104,6 +101,8 @@ public class TenantServiceImpl implements TenantService {
     public Long createTenant(TenantSaveReqVO createReqVO) {
         // 校验租户名称是否重复
         validTenantNameDuplicate(createReqVO.getName(), null);
+        // 校验租户码是否重复
+        validTenantCodeDuplicate(createReqVO.getCode(), null);
         // 校验租户域名是否重复
         validTenantWebsiteDuplicate(createReqVO.getWebsite(), null);
         // 校验套餐被禁用
@@ -121,9 +120,6 @@ public class TenantServiceImpl implements TenantService {
             // 修改租户的管理员
             tenantMapper.updateById(new TenantDO().setId(tenant.getId()).setContactUserId(userId));
         });
-        DataSourceConfigDTO dataSourceConfigDTO = new DataSourceConfigDTO(tenant.getId(),createReqVO.getCode());
-        dataSourceConfigApi.createDataSourceConfig(dataSourceConfigDTO);
-        // TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return tenant.getId();
     }
 
@@ -153,6 +149,8 @@ public class TenantServiceImpl implements TenantService {
         TenantDO tenant = validateUpdateTenant(updateReqVO.getId());
         // 校验租户名称是否重复
         validTenantNameDuplicate(updateReqVO.getName(), updateReqVO.getId());
+        // 校验租户码是否重复
+        validTenantCodeDuplicate(updateReqVO.getCode(), updateReqVO.getId());
         // 校验租户域名是否重复
         validTenantWebsiteDuplicate(updateReqVO.getWebsite(), updateReqVO.getId());
         // 校验套餐被禁用
@@ -178,6 +176,20 @@ public class TenantServiceImpl implements TenantService {
         }
         if (!tenant.getId().equals(id)) {
             throw exception(TENANT_NAME_DUPLICATE, name);
+        }
+    }
+
+    private void validTenantCodeDuplicate(String code, Long id) {
+        TenantDO tenant = tenantMapper.selectByCode(code);
+        if (tenant == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同名字的租户
+        if (id == null) {
+            throw exception(TENANT_CODE_DUPLICATE, code);
+        }
+        if (!tenant.getId().equals(id)) {
+            throw exception(TENANT_CODE_DUPLICATE, code);
         }
     }
 

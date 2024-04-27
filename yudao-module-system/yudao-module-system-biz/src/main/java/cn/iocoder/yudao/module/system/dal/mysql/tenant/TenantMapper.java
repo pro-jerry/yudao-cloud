@@ -31,6 +31,10 @@ public interface TenantMapper extends BaseMapperX<TenantDO> {
         return selectOne(TenantDO::getName, name);
     }
 
+    default TenantDO selectByCode(String code) {
+        return selectOne(TenantDO::getCode, code);
+    }
+
     default TenantDO selectByWebsite(String website) {
         return selectOne(TenantDO::getWebsite, website);
     }

@@ -3,12 +3,14 @@ package cn.iocoder.yudao.module.infra.api.db.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
 @Schema(description = "RPC 服务 - 数据源配置创建 Request DTO")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class DataSourceConfigDTO {
 
     @NotNull(message = "租户编号不能为空")
