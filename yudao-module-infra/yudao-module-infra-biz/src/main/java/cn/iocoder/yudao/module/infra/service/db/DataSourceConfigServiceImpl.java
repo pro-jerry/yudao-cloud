@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.infra.service.db;
 
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.util.JdbcUtils;
+import cn.iocoder.yudao.module.infra.api.db.dto.DataSourceConfigDTO;
 import cn.iocoder.yudao.module.infra.controller.admin.db.vo.DataSourceConfigSaveReqVO;
 import cn.iocoder.yudao.module.infra.dal.dataobject.db.DataSourceConfigDO;
 import cn.iocoder.yudao.module.infra.dal.mysql.db.DataSourceConfigMapper;
@@ -38,6 +39,15 @@ public class DataSourceConfigServiceImpl implements DataSourceConfigService {
         DataSourceConfigDO config = BeanUtils.toBean(createReqVO, DataSourceConfigDO.class);
         validateConnectionOK(config);
 
+        // 插入
+        dataSourceConfigMapper.insert(config);
+        // 返回
+        return config.getId();
+    }
+
+    @Override
+    public Long createDataSourceConfig(DataSourceConfigDTO dataSourceConfigDTO) {
+        DataSourceConfigDO config = BeanUtils.toBean(dataSourceConfigDTO, DataSourceConfigDO.class);
         // 插入
         dataSourceConfigMapper.insert(config);
         // 返回

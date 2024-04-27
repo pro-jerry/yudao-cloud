@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.infra.service.db;
 
+import cn.iocoder.yudao.module.infra.api.db.dto.DataSourceConfigDTO;
 import cn.iocoder.yudao.module.infra.controller.admin.db.vo.DataSourceConfigSaveReqVO;
 import cn.iocoder.yudao.module.infra.dal.dataobject.db.DataSourceConfigDO;
 
@@ -20,6 +21,14 @@ public interface DataSourceConfigService {
      * @return 编号
      */
     Long createDataSourceConfig(@Valid DataSourceConfigSaveReqVO createReqVO);
+
+    /**
+     * 创建数据源配置
+     *
+     * @param createReqVO 创建信息
+     * @return 编号
+     */
+    Long createDataSourceConfig(@Valid DataSourceConfigDTO createReqVO);
 
     /**
      * 更新数据源配置

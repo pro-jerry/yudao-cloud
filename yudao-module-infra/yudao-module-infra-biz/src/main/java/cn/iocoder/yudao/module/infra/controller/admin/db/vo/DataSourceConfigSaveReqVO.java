@@ -12,6 +12,10 @@ public class DataSourceConfigSaveReqVO {
     @Schema(description = "主键编号", example = "1024")
     private Long id;
 
+    @Schema(description = "租户ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @NotNull(message = "租户ID不能为空")
+    private Integer tenantId;
+
     @Schema(description = "数据源名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "test")
     @NotNull(message = "数据源名称不能为空")
     private String name;

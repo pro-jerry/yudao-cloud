@@ -12,6 +12,8 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.tenant.config.TenantProperties;
 import cn.iocoder.yudao.framework.tenant.core.context.TenantContextHolder;
 import cn.iocoder.yudao.framework.tenant.core.util.TenantUtils;
+import cn.iocoder.yudao.module.infra.api.db.DataSourceConfigApi;
+import cn.iocoder.yudao.module.infra.api.db.dto.DataSourceConfigDTO;
 import cn.iocoder.yudao.module.system.controller.admin.permission.vo.role.RoleSaveReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.tenant.vo.tenant.TenantPageReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.tenant.vo.tenant.TenantSaveReqVO;
@@ -74,6 +76,9 @@ public class TenantServiceImpl implements TenantService {
     @Resource
     private PermissionService permissionService;
 
+    @Resource
+    private DataSourceConfigApi dataSourceConfigApi;
+
     @Override
     public List<Long> getTenantIdList() {
         List<TenantDO> tenants = tenantMapper.selectList();
@@ -116,6 +121,9 @@ public class TenantServiceImpl implements TenantService {
             // 修改租户的管理员
             tenantMapper.updateById(new TenantDO().setId(tenant.getId()).setContactUserId(userId));
         });
+        DataSourceConfigDTO dataSourceConfigDTO = new DataSourceConfigDTO(tenant.getId(),createReqVO.getCode());
+        dataSourceConfigApi.createDataSourceConfig(dataSourceConfigDTO);
+        // TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return tenant.getId();
     }
 

@@ -26,6 +26,12 @@ public class DataSourceConfigDO extends BaseDO {
      * 主键编号
      */
     private Long id;
+
+    /**
+     * 租户编号
+     */
+    private Long tenantId;
+
     /**
      * 连接名
      */
