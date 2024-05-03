@@ -34,7 +34,7 @@ public class StorageSaveReqVO {
 
     @Schema(description = "是否锁定 0=未锁定 1=已锁定", requiredMode = Schema.RequiredMode.REQUIRED, example = "0")
     @NotNull(message = "是否锁定 0=未锁定 1=已锁定不能为空")
-    private Integer lock;
+    private Integer locked;
 
     @Schema(description = "备注", example = "你说的对")
     private String remark;

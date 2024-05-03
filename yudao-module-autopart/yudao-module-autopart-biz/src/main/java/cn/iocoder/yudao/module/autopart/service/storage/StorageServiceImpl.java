@@ -1,5 +1,9 @@
 package cn.iocoder.yudao.module.autopart.service.storage;
 
+import cn.hutool.core.util.IdUtil;
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
+import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +18,9 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.autopart.dal.mysql.storage.StorageMapper;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.framework.common.util.snowflake.SnowflakeUtils.to6Num;
+import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static cn.iocoder.yudao.module.autopart.enums.AutopartCodeConstants.ST;
 import static cn.iocoder.yudao.module.autopart.enums.ErrorCodeConstants.*;
 
 /**
@@ -32,6 +39,8 @@ public class StorageServiceImpl implements StorageService {
     public Long createStorage(StorageSaveReqVO createReqVO) {
         // 插入
         StorageDO storage = BeanUtils.toBean(createReqVO, StorageDO.class);
+        storage.setNum(ST+to6Num());
+        storage.setCreatorId(getLoginUserId());
         storageMapper.insert(storage);
         // 返回
         return storage.getId();

@@ -114,7 +114,7 @@ public class StorageServiceImplTest extends BaseDbUnitTest {
            o.setNum(null);
            o.setCapacity(null);
            o.setStatus(null);
-           o.setLock(null);
+           o.setLocked(null);
        });
        storageMapper.insert(dbStorage);
        // 测试 name 不匹配
@@ -126,7 +126,7 @@ public class StorageServiceImplTest extends BaseDbUnitTest {
        // 测试 status 不匹配
        storageMapper.insert(cloneIgnoreId(dbStorage, o -> o.setStatus(null)));
        // 测试 lock 不匹配
-       storageMapper.insert(cloneIgnoreId(dbStorage, o -> o.setLock(null)));
+       storageMapper.insert(cloneIgnoreId(dbStorage, o -> o.setLocked(null)));
        // 准备参数
        StoragePageReqVO reqVO = new StoragePageReqVO();
        reqVO.setName(null);

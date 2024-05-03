@@ -1,5 +1,7 @@
 package cn.iocoder.yudao.module.autopart.controller.admin.storage;
 
+import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
+import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -37,6 +39,9 @@ public class StorageController {
 
     @Resource
     private StorageService storageService;
+
+    @Resource
+    private AdminUserApi adminUserApi;
 
     @PostMapping("/create")
     @Operation(summary = "创建汽配仓库")
@@ -76,7 +81,16 @@ public class StorageController {
     @PreAuthorize("@ss.hasPermission('autopart:storage:query')")
     public CommonResult<PageResult<StorageRespVO>> getStoragePage(@Valid StoragePageReqVO pageReqVO) {
         PageResult<StorageDO> pageResult = storageService.getStoragePage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, StorageRespVO.class));
+        PageResult<StorageRespVO> voPageResult =  BeanUtils.toBean(pageResult, StorageRespVO.class);
+        voPageResult.getList().stream().forEach(x->{
+            CommonResult<AdminUserRespDTO> userNameResult = adminUserApi.getUser(x.getUserId());
+            CommonResult<AdminUserRespDTO> creatorNameResult = adminUserApi.getUser(x.getCreatorId());
+            AdminUserRespDTO adminUserRespDTO = userNameResult.getData();
+            AdminUserRespDTO creatorRespDTO = creatorNameResult.getData();
+            x.setUserName(adminUserRespDTO.getNickname());
+            x.setCreatorName(creatorRespDTO.getNickname());
+        });
+        return success(voPageResult);
     }
 
     @GetMapping("/export-excel")

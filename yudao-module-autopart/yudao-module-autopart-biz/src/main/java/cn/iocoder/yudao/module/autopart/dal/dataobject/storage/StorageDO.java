@@ -58,7 +58,7 @@ public class StorageDO extends BaseDO {
      *
      * 枚举 {@link TODO autopart_storage_locked 对应的类}
      */
-    private Integer lock;
+    private Integer locked;
     /**
      * 备注
      */
@@ -67,5 +67,9 @@ public class StorageDO extends BaseDO {
      * 仓库主管ID
      */
     private Long userId;
+
+    private Long creatorId;
+
+    private Long updaterId;
 
 }

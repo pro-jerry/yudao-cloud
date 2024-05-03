@@ -73,3 +73,5 @@ functions/mock
 screenshot
 .firebase
 sessionStore
+jrebel-classpath-86896.jar
+rebel.xml

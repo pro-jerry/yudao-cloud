@@ -15,6 +15,8 @@ import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
 @ExcelIgnoreUnannotated
 public class StorageRespVO {
 
+    private Long id;
+
     @Schema(description = "仓库名字", requiredMode = Schema.RequiredMode.REQUIRED, example = "张三")
     @ExcelProperty("仓库名字")
     private String name;
@@ -37,13 +39,13 @@ public class StorageRespVO {
 
     @Schema(description = "仓库状态 0=关闭 1=开启", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     @ExcelProperty(value = "仓库状态 0=关闭 1=开启", converter = DictConvert.class)
-    @DictFormat("autopart_storage_status") // TODO 代码优化：建议设置到对应的 DictTypeConstants 枚举类中
+    @DictFormat("autopart_storage_status")
     private Integer status;
 
     @Schema(description = "是否锁定 0=未锁定 1=已锁定", requiredMode = Schema.RequiredMode.REQUIRED, example = "0")
     @ExcelProperty(value = "是否锁定 0=未锁定 1=已锁定", converter = DictConvert.class)
-    @DictFormat("autopart_storage_locked") // TODO 代码优化：建议设置到对应的 DictTypeConstants 枚举类中
-    private Integer lock;
+    @DictFormat("autopart_storage_locked")
+    private Integer locked;
 
     @Schema(description = "备注", example = "你说的对")
     @ExcelProperty("备注")
@@ -55,10 +57,16 @@ public class StorageRespVO {
 
     @Schema(description = "创建者")
     @ExcelProperty("创建者")
-    private String creator;
+    private String creatorName;
+
+    private Long creatorId;
 
     @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
+
+    @Schema(description = "仓库主管姓名", requiredMode = Schema.RequiredMode.REQUIRED,example = "19443")
+    @ExcelProperty("仓库主管姓名")
+    private String userName;
 
 }
