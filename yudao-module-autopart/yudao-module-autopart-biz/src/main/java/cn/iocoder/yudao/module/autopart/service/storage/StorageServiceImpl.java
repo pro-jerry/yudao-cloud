@@ -2,6 +2,9 @@ package cn.iocoder.yudao.module.autopart.service.storage;
 
 import cn.hutool.core.util.IdUtil;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import cn.iocoder.yudao.module.autopart.dal.dataobject.storage.StorageLocationDO;
+import cn.iocoder.yudao.module.autopart.dal.mysql.storage.StorageLocationMapper;
 import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,8 @@ public class StorageServiceImpl implements StorageService {
 
     @Resource
     private StorageMapper storageMapper;
+    @Resource
+    private StorageLocationMapper storageLocationMapper;
 
     @Override
     public Long createStorage(StorageSaveReqVO createReqVO) {
@@ -77,6 +82,50 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public PageResult<StorageDO> getStoragePage(StoragePageReqVO pageReqVO) {
         return storageMapper.selectPage(pageReqVO);
+    }
+
+    // ==================== 子表（仓库库位） ====================
+
+    @Override
+    public PageResult<StorageLocationDO> getStorageLocationPage(PageParam pageReqVO, Long storageId) {
+        return storageLocationMapper.selectPage(pageReqVO, storageId);
+    }
+
+    @Override
+    public Long createStorageLocation(StorageLocationDO storageLocation) {
+        storageLocationMapper.insert(storageLocation);
+        return storageLocation.getId();
+    }
+
+    @Override
+    public void updateStorageLocation(StorageLocationDO storageLocation) {
+        // 校验存在
+        validateStorageLocationExists(storageLocation.getId());
+        // 更新
+        storageLocationMapper.updateById(storageLocation);
+    }
+
+    @Override
+    public void deleteStorageLocation(Long id) {
+        // 校验存在
+        validateStorageLocationExists(id);
+        // 删除
+        storageLocationMapper.deleteById(id);
+    }
+
+    @Override
+    public StorageLocationDO getStorageLocation(Long id) {
+        return storageLocationMapper.selectById(id);
+    }
+
+    private void validateStorageLocationExists(Long id) {
+        if (storageLocationMapper.selectById(id) == null) {
+            throw exception(STORAGE_LOCATION_NOT_EXISTS);
+        }
+    }
+
+    private void deleteStorageLocationByStorageId(Long storageId) {
+        storageLocationMapper.deleteByStorageId(storageId);
     }
 
 }

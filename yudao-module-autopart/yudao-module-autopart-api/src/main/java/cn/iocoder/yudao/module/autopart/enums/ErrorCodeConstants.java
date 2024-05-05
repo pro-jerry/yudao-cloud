@@ -9,5 +9,6 @@ import lombok.Getter;
 public interface ErrorCodeConstants {
 
     ErrorCode STORAGE_NOT_EXISTS = new ErrorCode(1_023_000_001, "汽配仓库不存在");
+    ErrorCode STORAGE_LOCATION_NOT_EXISTS = new ErrorCode(1_023_000_002, "仓库库位不存在");
 
 }

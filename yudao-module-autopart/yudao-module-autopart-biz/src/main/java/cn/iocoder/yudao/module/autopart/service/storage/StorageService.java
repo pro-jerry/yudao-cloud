@@ -6,6 +6,7 @@ import cn.iocoder.yudao.module.autopart.controller.admin.storage.vo.*;
 import cn.iocoder.yudao.module.autopart.dal.dataobject.storage.StorageDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import cn.iocoder.yudao.module.autopart.dal.dataobject.storage.StorageLocationDO;
 
 /**
  * 汽配仓库 Service 接口
@@ -51,5 +52,46 @@ public interface StorageService {
      * @return 汽配仓库分页
      */
     PageResult<StorageDO> getStoragePage(StoragePageReqVO pageReqVO);
+
+    // ==================== 子表（仓库库位） ====================
+
+    /**
+     * 获得仓库库位分页
+     *
+     * @param pageReqVO 分页查询
+     * @param storageId 仓库ID
+     * @return 仓库库位分页
+     */
+    PageResult<StorageLocationDO> getStorageLocationPage(PageParam pageReqVO, Long storageId);
+
+    /**
+     * 创建仓库库位
+     *
+     * @param storageLocation 创建信息
+     * @return 编号
+     */
+    Long createStorageLocation(@Valid StorageLocationDO storageLocation);
+
+    /**
+     * 更新仓库库位
+     *
+     * @param storageLocation 更新信息
+     */
+    void updateStorageLocation(@Valid StorageLocationDO storageLocation);
+
+    /**
+     * 删除仓库库位
+     *
+     * @param id 编号
+     */
+    void deleteStorageLocation(Long id);
+
+    /**
+     * 获得仓库库位
+     *
+     * @param id 编号
+     * @return 仓库库位
+     */
+    StorageLocationDO getStorageLocation(Long id);
 
 }

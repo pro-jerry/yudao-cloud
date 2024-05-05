@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.autopart.controller.admin.storage;
 
+import cn.iocoder.yudao.module.autopart.dal.dataobject.storage.StorageLocationDO;
 import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import org.springframework.web.bind.annotation.*;
@@ -104,6 +105,49 @@ public class StorageController {
         // 导出 Excel
         ExcelUtils.write(response, "汽配仓库.xls", "数据", StorageRespVO.class,
                         BeanUtils.toBean(list, StorageRespVO.class));
+    }
+
+    // ==================== 子表（仓库库位） ====================
+
+    @GetMapping("/storage-location/page")
+    @Operation(summary = "获得仓库库位分页")
+    @Parameter(name = "storageId", description = "仓库ID")
+    @PreAuthorize("@ss.hasPermission('autopart:storage:query')")
+    public CommonResult<PageResult<StorageLocationDO>> getStorageLocationPage(PageParam pageReqVO,
+                                                                              @RequestParam("storageId") Long storageId) {
+        return success(storageService.getStorageLocationPage(pageReqVO, storageId));
+    }
+
+    @PostMapping("/storage-location/create")
+    @Operation(summary = "创建仓库库位")
+    @PreAuthorize("@ss.hasPermission('autopart:storage:create')")
+    public CommonResult<Long> createStorageLocation(@Valid @RequestBody StorageLocationDO storageLocation) {
+        return success(storageService.createStorageLocation(storageLocation));
+    }
+
+    @PutMapping("/storage-location/update")
+    @Operation(summary = "更新仓库库位")
+    @PreAuthorize("@ss.hasPermission('autopart:storage:update')")
+    public CommonResult<Boolean> updateStorageLocation(@Valid @RequestBody StorageLocationDO storageLocation) {
+        storageService.updateStorageLocation(storageLocation);
+        return success(true);
+    }
+
+    @DeleteMapping("/storage-location/delete")
+    @Parameter(name = "id", description = "编号", required = true)
+    @Operation(summary = "删除仓库库位")
+    @PreAuthorize("@ss.hasPermission('autopart:storage:delete')")
+    public CommonResult<Boolean> deleteStorageLocation(@RequestParam("id") Long id) {
+        storageService.deleteStorageLocation(id);
+        return success(true);
+    }
+
+    @GetMapping("/storage-location/get")
+    @Operation(summary = "获得仓库库位")
+    @Parameter(name = "id", description = "编号", required = true)
+    @PreAuthorize("@ss.hasPermission('autopart:storage:query')")
+    public CommonResult<StorageLocationDO> getStorageLocation(@RequestParam("id") Long id) {
+        return success(storageService.getStorageLocation(id));
     }
 
 }
