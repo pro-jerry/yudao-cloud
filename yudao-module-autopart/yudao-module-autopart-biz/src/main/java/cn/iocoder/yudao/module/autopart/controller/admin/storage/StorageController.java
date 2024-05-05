@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.autopart.controller.admin.storage;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.yudao.module.autopart.dal.dataobject.storage.StorageLocationDO;
 import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
@@ -87,9 +88,13 @@ public class StorageController {
             CommonResult<AdminUserRespDTO> userNameResult = adminUserApi.getUser(x.getUserId());
             CommonResult<AdminUserRespDTO> creatorNameResult = adminUserApi.getUser(x.getCreatorId());
             AdminUserRespDTO adminUserRespDTO = userNameResult.getData();
+            if (ObjectUtil.isNotNull(adminUserRespDTO)) {
+                x.setUserName(adminUserRespDTO.getNickname());
+            }
             AdminUserRespDTO creatorRespDTO = creatorNameResult.getData();
-            x.setUserName(adminUserRespDTO.getNickname());
-            x.setCreatorName(creatorRespDTO.getNickname());
+            if (ObjectUtil.isNotNull(creatorRespDTO)) {
+                x.setCreatorName(creatorRespDTO.getNickname());
+            }
         });
         return success(voPageResult);
     }

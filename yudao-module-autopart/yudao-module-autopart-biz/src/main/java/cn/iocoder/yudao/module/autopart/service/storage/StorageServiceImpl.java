@@ -57,6 +57,7 @@ public class StorageServiceImpl implements StorageService {
         validateStorageExists(updateReqVO.getId());
         // 更新
         StorageDO updateObj = BeanUtils.toBean(updateReqVO, StorageDO.class);
+        updateObj.setUpdaterId(getLoginUserId());
         storageMapper.updateById(updateObj);
     }
 

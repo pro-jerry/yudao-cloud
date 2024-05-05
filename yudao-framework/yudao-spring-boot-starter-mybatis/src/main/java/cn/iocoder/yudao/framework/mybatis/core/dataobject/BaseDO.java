@@ -40,6 +40,7 @@ public abstract class BaseDO implements Serializable, TransPojo {
      */
     @TableField(fill = FieldFill.INSERT, jdbcType = JdbcType.VARCHAR)
     private String creator;
+
     /**
      * 更新者，目前使用 SysUser 的 id 编号
      *
@@ -47,6 +48,7 @@ public abstract class BaseDO implements Serializable, TransPojo {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE, jdbcType = JdbcType.VARCHAR)
     private String updater;
+
     /**
      * 是否删除
      */
