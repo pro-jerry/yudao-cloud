@@ -69,4 +69,8 @@ public class StorageRespVO {
     @ExcelProperty("仓库主管姓名")
     private String userName;
 
+    @Schema(description = "仓位数量")
+    @ExcelProperty("仓位数量")
+    private Long storageLocationCount;
+
 }

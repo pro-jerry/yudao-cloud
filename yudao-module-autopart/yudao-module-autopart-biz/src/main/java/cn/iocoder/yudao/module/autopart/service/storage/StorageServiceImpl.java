@@ -1,18 +1,12 @@
 package cn.iocoder.yudao.module.autopart.service.storage;
 
-import cn.hutool.core.util.IdUtil;
-import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.module.autopart.dal.dataobject.storage.StorageLocationDO;
 import cn.iocoder.yudao.module.autopart.dal.mysql.storage.StorageLocationMapper;
-import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
-import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
 import cn.iocoder.yudao.module.autopart.controller.admin.storage.vo.*;
 import cn.iocoder.yudao.module.autopart.dal.dataobject.storage.StorageDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
@@ -24,6 +18,7 @@ import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionU
 import static cn.iocoder.yudao.framework.common.util.snowflake.SnowflakeUtils.to6Num;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.autopart.enums.AutopartCodeConstants.ST;
+import static cn.iocoder.yudao.module.autopart.enums.AutopartCodeConstants.STLO;
 import static cn.iocoder.yudao.module.autopart.enums.ErrorCodeConstants.*;
 
 /**
@@ -94,6 +89,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Long createStorageLocation(StorageLocationDO storageLocation) {
+        storageLocation.setNum(STLO+to6Num());
         storageLocationMapper.insert(storageLocation);
         return storageLocation.getId();
     }
@@ -117,6 +113,11 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public StorageLocationDO getStorageLocation(Long id) {
         return storageLocationMapper.selectById(id);
+    }
+
+    @Override
+    public Long locationCount(Long id) {
+        return storageLocationMapper.getCountByStorageId(id);
     }
 
     private void validateStorageLocationExists(Long id) {

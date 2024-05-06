@@ -24,7 +24,7 @@ public interface StorageMapper extends BaseMapperX<StorageDO> {
                 .eqIfPresent(StorageDO::getCapacity, reqVO.getCapacity())
                 .eqIfPresent(StorageDO::getStatus, reqVO.getStatus())
                 .eqIfPresent(StorageDO::getLocked, reqVO.getLock())
-                .orderByDesc(StorageDO::getId));
+                .orderByDesc(StorageDO::getSort));
     }
 
 }

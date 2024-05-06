@@ -85,16 +85,8 @@ public class StorageController {
         PageResult<StorageDO> pageResult = storageService.getStoragePage(pageReqVO);
         PageResult<StorageRespVO> voPageResult =  BeanUtils.toBean(pageResult, StorageRespVO.class);
         voPageResult.getList().stream().forEach(x->{
-            CommonResult<AdminUserRespDTO> userNameResult = adminUserApi.getUser(x.getUserId());
-            CommonResult<AdminUserRespDTO> creatorNameResult = adminUserApi.getUser(x.getCreatorId());
-            AdminUserRespDTO adminUserRespDTO = userNameResult.getData();
-            if (ObjectUtil.isNotNull(adminUserRespDTO)) {
-                x.setUserName(adminUserRespDTO.getNickname());
-            }
-            AdminUserRespDTO creatorRespDTO = creatorNameResult.getData();
-            if (ObjectUtil.isNotNull(creatorRespDTO)) {
-                x.setCreatorName(creatorRespDTO.getNickname());
-            }
+            Long locationCount = storageService.locationCount(x.getId());
+            x.setStorageLocationCount(locationCount);
         });
         return success(voPageResult);
     }

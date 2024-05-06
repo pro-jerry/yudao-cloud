@@ -6,5 +6,9 @@ package cn.iocoder.yudao.module.autopart.enums;
  */
 public interface AutopartCodeConstants {
 
+    //仓库编号前缀
     public static final String ST = "ST";
+
+    //库位编号前缀
+    public static final String STLO = "STLO";
 }

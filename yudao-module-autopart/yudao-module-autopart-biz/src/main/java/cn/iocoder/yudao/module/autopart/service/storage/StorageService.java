@@ -1,6 +1,5 @@
 package cn.iocoder.yudao.module.autopart.service.storage;
 
-import java.util.*;
 import javax.validation.*;
 import cn.iocoder.yudao.module.autopart.controller.admin.storage.vo.*;
 import cn.iocoder.yudao.module.autopart.dal.dataobject.storage.StorageDO;
@@ -93,5 +92,13 @@ public interface StorageService {
      * @return 仓库库位
      */
     StorageLocationDO getStorageLocation(Long id);
+
+    /**
+     * 获取库位数量.
+     *
+     * @param id 仓库ID
+     * @return 库位总数
+     */
+    Long locationCount(Long id);
 
 }
