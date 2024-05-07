@@ -28,6 +28,6 @@ public class StoragePageReqVO extends PageParam {
     private Integer status;
 
     @Schema(description = "是否锁定 0=未锁定 1=已锁定", example = "0")
-    private Integer lock;
+    private Integer locked;
 
 }
